@@ -56,23 +56,71 @@ export class BenchNode {
   /** Useful for eventually calculating the standard deviation. */
   private calculatedVariance: number | null = null;
 
-  /** Actually calculate the mean value. */
-  get mean(): number { return 0; }
+  /** Actually calculate the mean value in ms. */
+  get mean(): number {
+    if (this.runs.length === 0) return NaN;
+    const runs = this.runs;
+    const length = runs.length;
+    let sum = 0;
+    for (let i = 0; i < length; i++) {
+      sum += runs[i];
+    }
+    return sum / length;
+  }
 
   /** Actually calculate the median value. */
-  get median(): number { return 0; }
+  get median(): number {
+    if (this.runs.length === 0) return NaN;
+    const length = this.runs.length;
+    const odd = length & 1;
+    const halfLength = length / 2;
+    this.runs.sort();
+    return odd === 1
+      ? this.runs[Math.ceil(halfLength)]
+      : (this.runs[halfLength] + this.runs[halfLength + 1]) / 2;
+    ;
+  }
 
   /** Actually calculate the max value. */
-  get max(): number { return 0; }
+  get max(): number {
+    if (this.runs.length === 0) return NaN;
+    let max = 0;
+    for (let i = 0; i < this.runs.length; i++) {
+      let value = this.runs[i];
+      if (value > max) max = value;
+    }
+    return max;
+  }
 
   /** Actually calculate the min value. */
-  get min(): number { return 0; }
+  get min(): number {
+    if (this.runs.length === 0) return NaN;
+    let min = this.runs[0];
+    for (let i = 1; i < this.runs.length; i++) {
+      let value = this.runs[i];
+      if (value < min) min = value;
+    }
+    return min;
+  }
 
   /** Actually calculate the variance value. */
-  get variance(): number { return 0; }
+  get variance(): number {
+    if (this.calculatedVariance !== null) return this.calculatedVariance;
+    var avg = this.mean,
+      length = this.runs.length,
+      i = length,
+      v = 0;
+
+    while( i-- ){
+      v += Math.pow( (this.runs[ i ] - avg), 2 );
+    }
+    v /= length;
+
+    return this.calculatedVariance = v;
+  }
 
   /** Actually calculate the variance value. */
-  get stdDev(): number { return 0; }
+  get stdDev(): number { return Math.sqrt(this.variance); }
 
   /** The children of this BenchNode. */
   children: BenchNode[] = [];
