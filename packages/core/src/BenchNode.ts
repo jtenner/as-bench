@@ -105,6 +105,7 @@ export class BenchNode {
 
   /** Actually calculate the variance value. */
   get variance(): number {
+    if (this.runs.length === 0) return NaN;
     if (this.calculatedVariance !== null) return this.calculatedVariance;
     var avg = this.mean,
       length = this.runs.length,
@@ -120,7 +121,7 @@ export class BenchNode {
   }
 
   /** Actually calculate the variance value. */
-  get stdDev(): number { return Math.sqrt(this.variance); }
+  get stdDev(): number {return Math.sqrt(this.variance); }
 
   /** The children of this BenchNode. */
   children: BenchNode[] = [];
