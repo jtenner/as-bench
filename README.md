@@ -13,7 +13,7 @@ Benchmarking and optimizations are an important step of every project. You have 
 The as-bench benchmark suite itself was designed to solve a few problems:
 
 - Create a set of benchmark API that match Jest ergonomics
-- Compile and bootstrap your tests from a CLI
+- Compile and bootstrap your tests from a minimal CLI
 - Standardize the way AssemblyScript modules are written
 - Encourage good optimization habits
 
@@ -28,8 +28,8 @@ Download some stuff from npm, run some cli commands, and voilà you know what co
 # initialize a node project
 npm init
 
-# install assemblyscript nightly
-npm install --save-exact --save-dev assemblyscript@nightly
+# install assemblyscript latest
+npm install --save-exact --save-dev assemblyscript
 
 # get the latest version of as-pect
 npm install --save-dev @as-bench/cli
@@ -45,18 +45,29 @@ Checkout the [`examples`](./examples) directory for a bunch of great examples of
 
 #### Code Structure
 
+To create a benchmark, call the `bench()` function.
+
 ```ts
-bench("a group", () => {
-  beforeAll(() => {});
-  beforeEach(() => {});
-  test("a test", () => {});
-  bench("a child group", () => {
-    beforeAll(() => {});
-    test("a test", () => {});
-    afterAll(() => {});
-  });
-  afterEach(() => {});
-  afterAll(() => {});
+bench("a benchmark function", () => {
+  // this callback will be repeatedly called and timed
+});
+```
+
+To create a group of benchmarks, use the `group()` function.
+
+```ts
+group("name of group", () => {
+  bench("child benchmark", () => {});
+});
+```
+
+To collect averages, and medians, call the `mean()` and `median()` functions.
+
+```ts
+mean(true); // collect the mean and median for only the following group or benchmark
+median(true);
+group("a bench group", () => {
+  // each benchmark in this group will collect mean and median runtime values
 });
 ```
 
@@ -68,26 +79,23 @@ const amount: u32 = 1000000;
 
 let fortyTwo: f64;
 
-bench("The Meaning Of Life", amount, () => {
-  beforeAll(() => {
-    fortyTwo = 42; //someInitialValue;
-  });
-  test("the square the meaning of life", () => {
-    fortyTwo += theMeaningofLife * theMeaningofLife;
-  });
-  test("the power of the meaning of life", () => {
-    fortyTwo += Math.pow(theMeaningofLife, 2.0);
-  });
-  afterAll(() => {
-    if (fortyTwo !== 42) {
-      console.log("The meaning to life is not: ", fortyTwo);
-      fortyTwo = 42; //correct answer
-      console.log(
-        fortyTwo +
-          " is the Answer to the Ultimate Question of Life, the Universe and Everything.",
-      );
-    }
-  });
+group("The Meaning Of Life", () => {
+    beforeAll(() => {
+      fortyTwo = 42 //someInitialValue;
+    })
+    bench("the square the meaning of life", () => {
+        fortyTwo += theMeaningofLife*theMeaningofLife
+    })
+    bench("the power of the meaning of life", () => {
+        fortyTwo += Math.pow(theMeaningofLife, 2.0)
+    })
+    afterAll(() => {
+      if(fortyTwo !== 42) {
+        console.log("The meaning to life is not: ", fortyTwo)
+        fortyTwo = 42 //correct answer
+        console.log(
+          fortyTwo + " is the Answer to the Ultimate Question of Life, the Universe and Everything.")}
+    })
 });
 
 //### outputs
