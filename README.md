@@ -1,6 +1,6 @@
 # 🛋️ as-bench
 ## Benchmark Your AssemblyScript Software Meaningfully
----
+
 ### About
 **Bench** is an [*AssemblyScript*](https://github.com/AssemblyScript/assemblyscript) benchmark testing suite that will comfortably compile your code into [**WebAssembly**](http://webassembly.org) and test its performance. It has been design to be easy to use, fast, and lightweight as possible.
 
