@@ -61,4 +61,10 @@ export class BenchNode {
 
   /** Actually calculate the variance value. */
   get stdDev(): number { return 0; }
+
+  /** The children of this BenchNode. */
+  children: BenchNode[] = [];
+
+  /** The parent of this BenchNode. */
+  parent: BenchNode | null = null;
 }
