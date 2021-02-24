@@ -1,0 +1,26 @@
+{
+  "name": "as-bench",
+  "version": "0.0.0",
+  "description": "Benchmark Your AssemblyScript Software Meaningfully",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jtenner/as-bench.git"
+  },
+  "keywords": [
+    "wasm",
+    "testing",
+    "benchmark",
+    "typescript",
+    "assemblyscript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jtenner/as-bench/issues"
+  },
+  "homepage": "https://github.com/jtenner/as-bench#readme"
+}

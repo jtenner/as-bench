@@ -1,5 +1,5 @@
 {
-  "name": "core",
+  "name": "@as-bench/core",
   "version": "0.0.0",
   "description": "Benchmark Your AssemblyScript Software Meaningfully",
   "main": "lib/index.js",
