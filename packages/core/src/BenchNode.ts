@@ -41,6 +41,18 @@ export class BenchNode {
   /** Determine if this node should collect the standard deviation of the runtimes in this BenchNode. */
   collectStdDev: boolean | null = null;
 
+  /** The minimum number of iterations this BenchNode must run. */
+  minIterations: number | null = null;
+
+  /** The maximum number of iterations this BenchNode can run. */
+  maxIterations: number | null = null;
+
+  /** The minimum amount of milliseconds this BenchNode must run. */
+  minRuntime: number | null = null;
+
+  /** The maximum number of milliseconds this BenchNode can run. */
+  maxRuntime: number | null = null;
+
   /** Useful for eventually calculating the standard deviation. */
   private calculatedVariance: number | null = null;
 
