@@ -9,7 +9,6 @@ export interface IBenchExports {
   /** Call a function by it's table index. */
   __call(index: number): void;
 
-  /** configuration for collection options */
   __getDefaultCalculateMean(): bool;
   __getDefaultCalculateMedian(): bool;
   __getDefaultCalculateMaximum(): bool;

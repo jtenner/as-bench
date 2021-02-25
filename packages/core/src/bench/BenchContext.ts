@@ -14,8 +14,18 @@ const timeout = () => new Promise((resolve) => setImmediate(resolve));
  */
 export class BenchContext {
   constructor() {}
-  wasm: (IBenchExports & ASUtil) | null = null;
 
+  /** The web assembly instance for this benchmark module. */
+  wasm: WebAssembly.Instance | null = null;
+  /** The web assembly memory associated with this benchmark suite. */
+  memory: WebAssembly.Memory | null = null;
+
+  /** Cast the exports as IBenchExports. */
+  get exports(): IBenchExports {
+    return (this.wasm!.exports as unknown) as IBenchExports;
+  }
+
+  /** The root benchnode, represents all the benchmarks collected at the top level. */
   root: BenchNode = new BenchNode();
   currentNode: BenchNode = this.root;
 
@@ -89,12 +99,16 @@ export class BenchContext {
   /// TODO Should be part of a static utility class
   /** Helper function used translate string pointer into literal string for js */
   getString(ptr: number, defaultValue: string): string {
-    return ptr === 0 ? defaultValue : this.wasm!.__getString(ptr);
+    const buff = Buffer.from(this.memory!.buffer);
+    if (ptr === 0) return defaultValue;
+    const byteLength = buff.readUInt32LE(ptr - 32);
+    return buff.toString("utf16le", ptr, byteLength);
   }
 
   /** Run our WebAssembly instance and set default configuration */
   async run(wasm: ASUtil & IBenchExports): Promise<void> {
     this.wasm = wasm;
+    this.memory = memory;
 
     // explicitly start the module execution
     this.wasm._start();
