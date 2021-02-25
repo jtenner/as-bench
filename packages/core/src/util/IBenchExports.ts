@@ -6,15 +6,21 @@ type bool = 1 | 0;
  * provided by `as-bench` benchmark suite
  */
 export interface IBenchExports {
+  
   /** Call a function by it's table index. */
   __call(index: number): void;
-
   __getDefaultCalculateMean(): bool;
+
+  /** return calculated value for median average */
   __getDefaultCalculateMedian(): bool;
   __getDefaultCalculateMaximum(): bool;
   __getDefaultCalculateMinimum(): bool;
   __getDefaultCalculateVariance(): bool;
+
+  /** returns calculated difference of mean and result */
   __getDefaultCalculateStdDev(): bool;
+
+  /** returns total bench call's */
   __getDefaultIterationCount(): number;
   __getDefaultMinIterationCount(): number;
   __getDefaultMaxRuntime(): number;
