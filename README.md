@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🛋️ as-bench
 
 ## Benchmark Your AssemblyScript Software Meaningfully
@@ -8,9 +9,18 @@
 
 ### Introduction
 
+=======
+# @as-bench
+### 🛋️ Benchmark Your AssemblyScript Software Meaningfully
+
+## About
+**Bench** is an [*AssemblyScript*](https://github.com/AssemblyScript/assemblyscript) benchmark testing suite that will comfortably compile your code into [**WebAssembly**](http://webassembly.org) and test its performance. It has been design to be easy to use, fast, and lightweight as possible.
+
+## Introduction
+>>>>>>> 4b3c9c3 (added some formating and example blurp)
 Benchmarking and optimizations are an important step of every project. You have a responsibility to make sure that software you write works as intended and is within your acceptable standard deviation. The as-bench project was created to help you quickly scaffold and bootstrap AssemblyScript benchmark tests so that you can be confident in yourself (and brag to your team) of how efficent and fast your code is. Remember every bit code saved is also a Planck of energy saved.
 
-The as-bench benchmark suite itself was designed to solve a few problems:
+The **as-bench** benchmark suite itself was designed to solve a few problems:
 
 - Create a set of benchmark API that match Jest ergonomics
 - Compile and bootstrap your tests from a minimal CLI
@@ -20,7 +30,7 @@ The as-bench benchmark suite itself was designed to solve a few problems:
 None of these problems are trivial, and as-bench provides an opinionated way to get started with optimizing your software.
 If any problems exist with this documentation, you may file an [**issue**](https://github.com/jtenner/as-bench/issues/new).
 
-### Getting Started
+## Getting Started
 
 Download some stuff from npm, run some cli commands, and voilà you know what code is slow and fast
 
@@ -31,7 +41,7 @@ npm init
 # install assemblyscript latest
 npm install --save-exact --save-dev assemblyscript
 
-# get the latest version of as-pect
+# get the latest version of as-bench
 npm install --save-dev @as-bench/cli
 
 # scaffold a new project
@@ -39,11 +49,15 @@ npx asinit .
 npx asb --init
 ```
 
+<<<<<<< HEAD
 ### Examples
 
+=======
+## Examples
+>>>>>>> 4b3c9c3 (added some formating and example blurp)
 Checkout the [`examples`](./examples) directory for a bunch of great examples of useful test cases, or hop over to our [**gitbook**](https://github.com/jtenner/as-bench) for further documentation
 
-#### Code Structure
+### Code Structure
 
 To create a benchmark, call the `bench()` function.
 
@@ -71,8 +85,13 @@ group("a bench group", () => {
 });
 ```
 
+<<<<<<< HEAD
 #### Simple Example
 
+=======
+### Simple Example
+The following example demonstrates a simple benchmark experiment.
+>>>>>>> 4b3c9c3 (added some formating and example blurp)
 ```ts
 const theMeaningOfLife: f64 = 42.0;
 const amount: u32 = 1000000;
@@ -107,6 +126,7 @@ group("The Meaning Of Life", () => {
 //$~ o -> 42 is the Answer to the Ultimate Question of Life, the Universe and Everything.
 ```
 
+<<<<<<< HEAD
 ### Contributing
 
 To contribute please see [CONTRIBUTING.md](./CONTRIBUTING.md).
@@ -114,3 +134,10 @@ To contribute please see [CONTRIBUTING.md](./CONTRIBUTING.md).
 ### Special Thanks
 
 Special thanks to the [_AssemblyScript_](https://github.com/AssemblyScript/assemblyscript) team for creating AssemblyScript itself.
+=======
+## Contributing
+To contribute please see [**CONTRIBUTING.md**](./CONTRIBUTING.md).
+
+## Special Thanks
+Special thanks to the [**AssemblyScript**](https://github.com/AssemblyScript/assemblyscript) team for creating AssemblyScript itself.
+>>>>>>> 4b3c9c3 (added some formating and example blurp)
