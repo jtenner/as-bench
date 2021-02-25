@@ -24,9 +24,7 @@
     "url": "https://github.com/jtenner/as-bench/issues"
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
-  "dependencies": {
-    "@as-bench/assembly": "^0.0.1"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "assemblyscript": "^0.18.11"
   },
