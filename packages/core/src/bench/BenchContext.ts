@@ -1,3 +1,1 @@
-export class BenchContext {
-
-}
+export class BenchContext {}

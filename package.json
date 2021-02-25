@@ -4,7 +4,8 @@
   "description": "Benchmark Your AssemblyScript Software Meaningfully",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write \"**/src/**/*.ts\" \"**/*.md\" \"**/*.json\""
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,9 @@
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
   "devDependencies": {
+    "lerna": "^3.22.1",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.2"
   }
 }
