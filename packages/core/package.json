@@ -1,6 +1,6 @@
 {
   "name": "@as-bench/core",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The core typescript package for creating benchmarks",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
   "dependencies": {
-    "@as-bench/assembly": "^0.0.0"
+    "@as-bench/assembly": "^0.0.1"
   },
   "peerDependencies": {
     "assemblyscript": "^0.18.11"

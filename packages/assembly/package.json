@@ -1,6 +1,6 @@
 {
   "name": "@as-bench/assembly",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The assembly package glue code for running benchmarks",
   "ascMain": "assemmbly/index.ts",
   "types": "types/as-bench.d.ts",

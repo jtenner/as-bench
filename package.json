@@ -9,7 +9,7 @@
   "///////////////////////awesome web assembly script benchmarks////": "",
   "                                                                 ": "",
   "name": "as-bench",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Benchmark Your AssemblyScript Software Meaningfully",
   "scripts": {
     "postinstall": "lerna bootstrap",

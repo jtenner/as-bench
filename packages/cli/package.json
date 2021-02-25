@@ -1,6 +1,6 @@
 {
   "name": "@as-bench/cli",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The command line interface for as-bench",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -31,8 +31,8 @@
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
   "dependencies": {
-    "@as-bench/assembly": "^0.0.0",
-    "@as-bench/core": "^0.0.0"
+    "@as-bench/assembly": "^0.0.1",
+    "@as-bench/core": "^0.0.1"
   },
   "peerDependencies": {
     "assemblyscript": "^0.18.11"
