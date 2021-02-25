@@ -1,0 +1,16 @@
+{
+  "name": "@as-bench/assembly",
+  "version": "0.0.1",
+  "description": "The assembly package glue code for running benchmarks",
+  "main": "assembly/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "benchmark",
+    "webassembly",
+    "wasm"
+  ],
+  "author": "Joshua Tenner <tenner.joshua@gmail.com>",
+  "license": "MIT"
+}

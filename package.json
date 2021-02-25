@@ -27,7 +27,7 @@
     "typescript",
     "assemblyscript"
   ],
-  "author": "",
+  "author": "Joshua Tenner <Tenner.Joshua@gmail.com> and Kara Rawson <@ZoeDreams>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jtenner/as-bench/issues"
