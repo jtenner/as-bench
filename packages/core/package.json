@@ -1,7 +1,7 @@
 {
   "name": "@as-bench/core",
   "version": "0.0.0",
-  "description": "Benchmark Your AssemblyScript Software Meaningfully",
+  "description": "The core typescript package for creating benchmarks",
   "main": "lib/index.js",
   "scripts": {
     "test": "node --experimental-wasi-unstable-preview1 --experimental-vm-modules --experimental-wasm-bigint ./node_modules/jest/bin/jest.js"
@@ -17,7 +17,7 @@
     "typescript",
     "assemblyscript"
   ],
-  "author": "",
+  "author": "Joshua Tenner <Tenner.Joshua@gmail.com> and Kara Rawson <@ZoeDreams>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jtenner/as-bench/issues"

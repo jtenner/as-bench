@@ -14,7 +14,7 @@
     "webassembly",
     "wasm"
   ],
-  "author": "Joshua Tenner <tenner.joshua@gmail.com>",
+  "author": "Joshua Tenner <Tenner.Joshua@gmail.com> and Kara Rawson <@ZoeDreams>",
   "license": "MIT",
   "devDependencies": {
     "assemblyscript": "^0.18.11"
