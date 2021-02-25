@@ -107,13 +107,13 @@ export class BenchNode {
   get variance(): number {
     if (this.runs.length === 0) return NaN;
     if (this.calculatedVariance !== null) return this.calculatedVariance;
-    var avg = this.mean,
-      length = this.runs.length,
-      i = length,
+    const avg = this.mean;
+    const length = this.runs.length;
+    let i = length,
       v = 0;
 
-    while( i-- ){
-      v += Math.pow( (this.runs[ i ] - avg), 2 );
+    while (i--) {
+      v += (this.runs[ i ] - avg) ** 2;
     }
     v /= length;
 
