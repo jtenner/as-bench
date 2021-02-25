@@ -13,6 +13,7 @@
   "description": "Benchmark Your AssemblyScript Software Meaningfully",
   "main": "index.js",
   "scripts": {
+    "postinstall": "lerna bootstrap",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "prettier --write \"**/src/**/*.ts\" \"**/*.md\" \"**/*.json\""
   },
@@ -34,6 +35,7 @@
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
   "devDependencies": {
+    "@assemblyscript/loader": "^0.18.11",
     "lerna": "^3.22.1",
     "prettier": "^2.2.1",
     "ts-node": "^9.1.1",
