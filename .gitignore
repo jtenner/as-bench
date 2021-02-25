@@ -7,7 +7,8 @@ yarn-error.log*
 lerna-debug.log*
 
 # Locks
-yarn.lock
+*yarn.lock
+*package-lock.json
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -70,6 +71,9 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+
+# Yarn clean file
+.yarnclean
 
 # Yarn Integrity file
 .yarn-integrity

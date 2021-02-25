@@ -15,7 +15,8 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "prettier --write \"**/src/**/*.ts\" \"**/*.md\" \"**/*.json\""
+    "prettier": "prettier --write \"**/src/**/*.ts\" \"**/*.md\" \"**/*.json\"",
+    "lint": "eslint --fix --max-warnings 0 --ext ts \"packages/**/assembly/**/*.ts\" \"packages/**/core/**/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -35,10 +36,15 @@
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
   "devDependencies": {
-    "@assemblyscript/loader": "^0.18.11",
+    "@as-bench/assembly": "file:./packages/assembly",
+    "@as-bench/core": "file:./packages/core",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "assemblyscript": "^0.18.11",
+    "eslint": "^7.20.0",
     "lerna": "^3.22.1",
     "prettier": "^2.2.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.0"
+    "typescript": "^4.2.2"
   }
 }
