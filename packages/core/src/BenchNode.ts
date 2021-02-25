@@ -78,7 +78,6 @@ export class BenchNode {
     return odd === 1
       ? this.runs[Math.ceil(halfLength)]
       : (this.runs[halfLength] + this.runs[halfLength + 1]) / 2;
-    ;
   }
 
   /** Actually calculate the max value. */
@@ -117,11 +116,13 @@ export class BenchNode {
     }
     v /= length;
 
-    return this.calculatedVariance = v;
+    return (this.calculatedVariance = v);
   }
 
   /** Actually calculate the variance value. */
-  get stdDev(): number {return Math.sqrt(this.variance); }
+  get stdDev(): number {
+    return Math.sqrt(this.variance);
+  }
 
   /** The children of this BenchNode. */
   children: BenchNode[] = [];
