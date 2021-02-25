@@ -84,7 +84,7 @@ bench("The Meaning Of Life", amount, () => {
       fortyTwo = 42; //correct answer
       console.log(
         fortyTwo +
-          " is the Answer to the Ultimate Question of Life, the Universe and Everything."
+          " is the Answer to the Ultimate Question of Life, the Universe and Everything.",
       );
     }
   });

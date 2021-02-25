@@ -113,3 +113,21 @@ dist
 # TernJS port file
 .tern-port
 .gitignore
+
+# Mac
+.DS_Store
+
+# Web Assembly Binaries
+**/*.wasm
+**/*.wat
+
+# libraries and builds
+lib
+build
+
+# Coverage Reports
+coverage
+
+# IDE configurations
+\.vscode/
+\.editor.config*
