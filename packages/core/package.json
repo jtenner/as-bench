@@ -1,0 +1,37 @@
+{
+  "name": "@as-bench/core",
+  "version": "0.0.1",
+  "description": "The core typescript package for creating benchmarks",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "node --experimental-wasi-unstable-preview1 --experimental-vm-modules --experimental-wasm-bigint ./node_modules/jest/bin/jest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jtenner/as-bench/tree/main/packages/core"
+  },
+  "keywords": [
+    "wasm",
+    "testing",
+    "benchmark",
+    "typescript",
+    "assemblyscript"
+  ],
+  "author": "Joshua Tenner <Tenner.Joshua@gmail.com> and Kara Rawson <@ZoeDreams>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jtenner/as-bench/issues"
+  },
+  "homepage": "https://github.com/jtenner/as-bench#readme",
+  "dependencies": {
+    "@as-bench/assembly": "^0.0.1"
+  },
+  "peerDependencies": {
+    "assemblyscript": "^0.18.11"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.2"
+  }
+}

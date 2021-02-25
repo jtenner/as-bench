@@ -1,0 +1,40 @@
+{
+  "name": "@as-bench/cli",
+  "version": "0.0.1",
+  "description": "The command line interface for as-bench",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "tsc:all": "run-p tsc:default tsc:amd",
+    "tsc:amd": "tsc --outfile lib/as-bench.cli.amd.js --module amd --declaration --declarationMap"
+  },
+  "bin": {
+    "asb": "bin/asb",
+    "bench": "bin/asb"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jtenner/as-bench/tree/main/packages/cli"
+  },
+  "keywords": [
+    "wasm",
+    "testing",
+    "benchmark",
+    "typescript",
+    "assemblyscript"
+  ],
+  "author": "Joshua Tenner <Tenner.Joshua@gmail.com> and Kara Rawson <@ZoeDreams>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jtenner/as-bench/issues"
+  },
+  "homepage": "https://github.com/jtenner/as-bench#readme",
+  "dependencies": {
+    "@as-bench/assembly": "^0.0.1",
+    "@as-bench/core": "^0.0.1"
+  },
+  "peerDependencies": {
+    "assemblyscript": "^0.18.11"
+  }
+}

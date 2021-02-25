@@ -1,4 +1,4 @@
-# @as-bench
+# as-bench
 ### 🛋️ Benchmark Your AssemblyScript Software Meaningfully
 
 ## About
@@ -18,7 +18,6 @@ None of these problems are trivial, and as-bench provides an opinionated way to 
 If any problems exist with this documentation, you may file an [**issue**](https://github.com/jtenner/as-bench/issues/new).
 
 ## Getting Started
-
 Download some stuff from npm, run some cli commands, and voilà you know what code is slow and fast
 
 ```sh
@@ -35,12 +34,10 @@ npm install --save-dev @as-bench/cli
 npx asinit .
 npx asb --init
 ```
-
 ## Examples
 Checkout the [`examples`](./examples) directory for a bunch of great examples of useful test cases, or hop over to our [**gitbook**](https://github.com/jtenner/as-bench) for further documentation
 
 ### Code Structure
-
 To create a benchmark, call the `bench()` function.
 
 ```ts
@@ -66,12 +63,12 @@ group("a bench group", () => {
   // each benchmark in this group will collect mean and median runtime values
 });
 ```
-
 ### Simple Example
 The following example demonstrates a simple benchmark experiment.
+
 ```ts
 const theMeaningOfLife: f64 = 42.0;
-const amount: u32 = 1000000
+const amount: u32 = 1000000;
 
 let fortyTwo: f64;
 
@@ -102,7 +99,6 @@ group("The Meaning Of Life", () => {
 //$~ o -> The meaning to life is not: 4.201945656021613227630487850325243748596838e42
 //$~ o -> 42 is the Answer to the Ultimate Question of Life, the Universe and Everything.
 ```
-
 ## Contributing
 To contribute please see [**CONTRIBUTING.md**](./CONTRIBUTING.md).
 

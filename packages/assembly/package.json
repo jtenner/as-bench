@@ -1,0 +1,36 @@
+{
+  "name": "@as-bench/assembly",
+  "version": "0.0.1",
+  "description": "The assembly package glue code for running benchmarks",
+  "ascMain": "assemmbly/index.ts",
+  "types": "types/as-bench.d.ts",
+  "scripts": {
+    "asb": "node ../cli/lib/bench --verbose",
+    "bench": "node ../cli/lib/bench --verbose",
+    "test": "run-s asb",
+    "tsc:all": "exit 0",
+    "//// BUILDING //////////////////////////////////////////////////////": "",
+    "build:debug": "asc assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap --debug ",
+    "build": "asc assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap -O3z --converge"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jtenner/as-bench/tree/main/packages/assembly"
+  },
+  "keywords": [
+    "wasm",
+    "testing",
+    "benchmark",
+    "typescript",
+    "assemblyscript"
+  ],
+  "author": "Joshua Tenner <Tenner.Joshua@gmail.com> and Kara Rawson <@ZoeDreams>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jtenner/as-bench/issues"
+  },
+  "homepage": "https://github.com/jtenner/as-bench#readme",
+  "peerDependencies": {
+    "assemblyscript": "^0.18.11"
+  }
+}
