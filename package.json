@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/jtenner/as-bench/issues"
   },
-  "homepage": "https://github.com/jtenner/as-bench#readme"
+  "homepage": "https://github.com/jtenner/as-bench#readme",
+  "devDependencies": {
+    "typescript": "^4.2.2"
+  }
 }
