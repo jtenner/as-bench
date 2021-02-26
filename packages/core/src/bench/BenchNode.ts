@@ -62,18 +62,8 @@ export class BenchNode {
   /** The total runtime for this node. */
   get runtime(): number { return this.endTime - this.startTime; }
 
-
-  /** Actually calculate the mean value in ms. */
-  get mean(): number {
-    if (this.runs.length === 0) return NaN;
-    const runs = this.runs;
-    const length = runs.length;
-    let sum = 0;
-    for (let i = 0; i < length; i++) {
-      sum += runs[i];
-    }
-    return sum / length;
-  }
+  /** The calculated the mean value in ms. */
+  mean: number | null = null;
 
   /** Actually calculate the median value. */
   get median(): number {

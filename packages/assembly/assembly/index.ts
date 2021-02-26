@@ -103,3 +103,12 @@ export function __runIterations(callback: i32, beforeEach: StaticArray<i32>, aft
 
   return iterations; // push the iterations count to the stack
 }
+
+export function __mean(): f64 {
+  if (runIndex == 0) return NaN;
+  let sum = 0;
+  for (let i = 0; i < runIndex; i++) {
+    sum += runs[i];
+  }
+  return <f64>sum / <f64>runIndex;
+}

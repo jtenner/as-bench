@@ -63,6 +63,8 @@ export class BenchContext {
     const maxRuntime = this.getMaxRuntime(node);
     const minIterations = this.getMinIterations(node);
     const iterationCount = this.getIterationCount(node);
+    const calculateMean = this.getCalculateMean(node);
+
     const i32StaticArrayID = this.wasm!.__getStaticArrayI32ID();
     // We need the __pin() method
     const beforeEachArray = this.wasm!.__newArray(i32StaticArrayID, beforeEach);
@@ -104,7 +106,11 @@ export class BenchContext {
     const end = performance.now();
     // TODO: Finalization of the node
     // 1. get all the runtimes via the memory
+    node.runs = Array.from(
+      new Float64Array(this.wasm!.memory!.buffer, this.wasm!.__getRuns(), iterationCount)
+    );
     // 2. obtain each property from wasm calculations
+    if (calculateMean) node.mean = this.wasm!.__mean();
 
     // 3. unpin the arrays
     // 4. set the start/end and end times
