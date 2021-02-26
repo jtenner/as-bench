@@ -4,6 +4,29 @@ declare function now(): f64;
 let runs = new StaticArray<f64>(__getDefaultIterationCount());
 let runIndex: i32 = 0;
 
+function quicksort(numbers: StaticArray<f64>, first: i32, last: i32){
+  let i: i32, j: i32 , pivot: i32, temp: i32;
+  if (first < last){
+    pivot = first;
+    i = first;
+    j = last;
+    while (i < j){
+      while (unchecked(numbers[i]) <= unchecked(numbers[pivot]) && i < last) i++;
+      while (unchecked(numbers[j]) > unchecked(numbers[pivot])) j--;
+      if (i < j) {
+        temp = unchecked(numbers[i]);
+        unchecked(numbers[i] = unchecked(numbers[j]));
+        unchecked(numbers[j] = temp);
+      }
+    }
+    temp = unchecked(numbers[pivot]);
+    unchecked(numbers[pivot] = unchecked(numbers[j]));
+    unchecked(numbers[j] = temp);
+    quicksort(numbers, first, j - 1);
+    quicksort(numbers, j + 1, last);
+  }
+}
+
 export function __resetRunIndex(): void {
   runIndex = 0;
 }
@@ -112,3 +135,14 @@ export function __mean(): f64 {
   }
   return <f64>sum / <f64>runIndex;
 }
+
+export function __median(): f64 {
+  if (runIndex === 0) return NaN;
+  const odd = bool(runIndex & 1);
+  const halfLength = runIndex >>> 1;
+  quicksort(runs, 0, runIndex - 1); // last run is stored at runIndex - 1
+  return odd
+    ? runs[halfLength + 1]
+    : (runs[halfLength] + runs[halfLength + 1]) / 2;
+}
+

@@ -64,20 +64,11 @@ export class BenchNode {
     return this.endTime - this.startTime;
   }
 
-  /** The calculated the mean value in ms. */
+  /** The calculated mean value in ms. */
   mean: number | null = null;
 
-  /** Actually calculate the median value. */
-  get median(): number {
-    if (this.runs.length === 0) return NaN;
-    const length = this.runs.length;
-    const odd = length & 1;
-    const halfLength = length / 2;
-    this.runs.sort();
-    return odd === 1
-      ? this.runs[Math.ceil(halfLength)]
-      : (this.runs[halfLength] + this.runs[halfLength + 1]) / 2;
-  }
+  /** The calculated median value. */
+  median: number | null = null;
 
   /** Actually calculate the max value. */
   get max(): number {

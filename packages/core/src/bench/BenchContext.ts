@@ -13,6 +13,7 @@ export class BenchContext {
 
   generateImports(imports: any): any {
     return Object.assign({}, imports, {
+      performance,
       __asbench: {
         reportBenchNode: this.reportBenchNode.bind(this),
       },
@@ -63,6 +64,7 @@ export class BenchContext {
     const minIterations = this.getMinIterations(node);
     const iterationCount = this.getIterationCount(node);
     const calculateMean = this.getCalculateMean(node);
+    const calculateMedian = this.getCalculateMedian(node);
 
     const i32StaticArrayID = this.wasm!.__getStaticArrayI32ID();
     // We need the __pin() method
@@ -114,13 +116,14 @@ export class BenchContext {
     );
     // 2. obtain each property from wasm calculations
     if (calculateMean) node.mean = this.wasm!.__mean();
+    if (calculateMedian) node.median = this.wasm!.__median();
 
     // 3. unpin the arrays
+    this.wasm!.__unpin(beforeEachArray);
+    this.wasm!.__unpin(afterEachArray);
     // 4. set the start/end and end times
     node.startTime = start;
     node.endTime = end;
-    this.wasm!.__unpin(beforeEachArray);
-    this.wasm!.__unpin(afterEachArray);
     return true;
   }
 }

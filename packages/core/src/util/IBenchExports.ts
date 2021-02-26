@@ -28,4 +28,5 @@ export interface IBenchExports {
   ): number;
   __resetRunIndex(): void;
   __mean(): number;
+  __median(): number;
 }
