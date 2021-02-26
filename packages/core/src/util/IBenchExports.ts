@@ -20,7 +20,12 @@ export interface IBenchExports {
   __ensureRunCount(count: number): void;
   __getRuns(): number;
   __getStaticArrayI32ID(): number;
-  __runIterations(callback: number, beforeEach: number, afterEach: number, iterations: number): number;
+  __runIterations(
+    callback: number,
+    beforeEach: number,
+    afterEach: number,
+    iterations: number,
+  ): number;
   __resetRunIndex(): void;
   __mean(): number;
 }

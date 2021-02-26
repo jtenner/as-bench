@@ -60,7 +60,9 @@ export class BenchNode {
   endTime: number = 0;
 
   /** The total runtime for this node. */
-  get runtime(): number { return this.endTime - this.startTime; }
+  get runtime(): number {
+    return this.endTime - this.startTime;
+  }
 
   /** The calculated the mean value in ms. */
   mean: number | null = null;

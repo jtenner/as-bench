@@ -36,7 +36,6 @@ export class BenchContext {
 
   async visit(node: BenchNode): Promise<boolean> {
     if (node.isGroup) {
-
       // beforeAll callbacks get called once
       for (let i = 0; i < node.beforeAll.length; i++) {
         this.wasm!.__call(node.beforeAll[i]);
@@ -107,7 +106,11 @@ export class BenchContext {
     // TODO: Finalization of the node
     // 1. get all the runtimes via the memory
     node.runs = Array.from(
-      new Float64Array(this.wasm!.memory!.buffer, this.wasm!.__getRuns(), iterationCount)
+      new Float64Array(
+        this.wasm!.memory!.buffer,
+        this.wasm!.__getRuns(),
+        iterationCount,
+      ),
     );
     // 2. obtain each property from wasm calculations
     if (calculateMean) node.mean = this.wasm!.__mean();
