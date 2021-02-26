@@ -17,6 +17,7 @@ export class BenchContext {
 
   /** The web assembly instance for this benchmark module. */
   wasm: (WebAssembly.Instance & ASUtil & IBenchExports) | null = null;
+
   /** The web assembly memory associated with this benchmark suite. */
   memory: WebAssembly.Memory | undefined = undefined;
 
