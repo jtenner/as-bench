@@ -15,5 +15,10 @@ export interface IBenchExports {
   __getDefaultCalculateVariance(): bool;
   __getDefaultCalculateStdDev(): bool;
   __getDefaultIterationCount(): number;
+  __getDefaultMinIterationCount(): number;
   __getDefaultMaxRuntime(): number;
+  __ensureRunCount(count: number): void;
+  __getRuns(): number;
+  __getStaticArrayI32ID(): number;
+  __runIterations(callback: number, beforeEach: number, afterEach: number, iterations: number): number;
 }

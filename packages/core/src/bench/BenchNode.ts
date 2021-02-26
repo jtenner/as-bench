@@ -47,6 +47,9 @@ export class BenchNode {
   /** The maximum number of milliseconds this BenchNode can run. */
   maxRuntime: number | null = null;
 
+  /** The number of iterations per poll. */
+  iterationCount: number | null = null;
+
   /** Useful for eventually calculating the standard deviation. */
   private calculatedVariance: number | null = null;
 
