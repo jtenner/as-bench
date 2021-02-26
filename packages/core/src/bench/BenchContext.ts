@@ -249,7 +249,9 @@ export class BenchContext {
     try {
       while (true) {
         const now = performance.now();
+        // respect max runtime first and foremost
         if (now > start + maxRuntime) break;
+        // ensure that the array has enough space to store the run times
         this.wasm!.__ensureRunCount(count + iterationCount);
 
         // the iteration count to the official count
@@ -260,10 +262,10 @@ export class BenchContext {
           afterEachArray,
           iterationCount,
         );
+
+        // finally, check to see if we have run enough iterations to satisfy the minIterations
         if (count > minIterations) break;
         await timeout();
-        // TODO: Do we really need a finished flag? -- not if we properly await while wasm iterates.
-        // if (this.finished) break;
       }
     } catch (exception) {
       // we stop execution all the way up the stack
@@ -289,7 +291,7 @@ export class BenchContext {
     if (calculateVariance) node.variance = this.wasm!.__variance();
     if (calculateStdDev) node.stdDev = this.wasm!.__stdDev();
 
-    // 3. unpin the arrays
+    // 3. unpin the arrays, they can be collected by AS now
     this.wasm!.__unpin(beforeEachArray);
     this.wasm!.__unpin(afterEachArray);
 
