@@ -9,7 +9,7 @@ const timeout = () => new Promise((resolve) => setImmediate(resolve));
 /**
  * The root class that handles and manages our Benchmark session. The context
  * is responsible for registering our wasm instance, import API, and walking
- * the bench tree hiearchy. It also slices and dices, while executing 
+ * the bench tree hiearchy. It also slices and dices, while executing
  * recursive benchmarks
  */
 export class BenchContext {
@@ -50,7 +50,7 @@ export class BenchContext {
         setCalculateMaximum: this.setCalculateMaximum.bind(this),
         setCalculateMinimum: this.setCalculateMaximum.bind(this),
         setCalculateVariance: this.setCalculateVariance.bind(this),
-        setCalculateStdDev: this.setCalculateStdDev.bind(this)
+        setCalculateStdDev: this.setCalculateStdDev.bind(this),
       },
     });
   }
@@ -101,12 +101,17 @@ export class BenchContext {
 
     // get the default value
     this.defaultCalculateMean = this.wasm!.__getDefaultCalculateMean() === 1;
-    this.defaultCalculateMedian = this.wasm!.__getDefaultCalculateMedian() === 1;
-    this.defaultCalculateMaximum = this.wasm!.__getDefaultCalculateMaximum() === 1;
-    this.defaultCalculateMinimum = this.wasm!.__getDefaultCalculateMinimum() === 1;
-    this.defaultCalculateVariance = this.wasm!.__getDefaultCalculateVariance() === 1;
-    this.defaultCalculateStdDev = this.wasm!.__getDefaultCalculateStdDev() === 1;
-    
+    this.defaultCalculateMedian =
+      this.wasm!.__getDefaultCalculateMedian() === 1;
+    this.defaultCalculateMaximum =
+      this.wasm!.__getDefaultCalculateMaximum() === 1;
+    this.defaultCalculateMinimum =
+      this.wasm!.__getDefaultCalculateMinimum() === 1;
+    this.defaultCalculateVariance =
+      this.wasm!.__getDefaultCalculateVariance() === 1;
+    this.defaultCalculateStdDev =
+      this.wasm!.__getDefaultCalculateStdDev() === 1;
+
     // wait for node tree walker to explore each node
     await this.visit(this.root);
   }
@@ -137,10 +142,9 @@ export class BenchContext {
 
   /** evaluate our visits to bench tree and execute run procedure */
   async evaluate(node: BenchNode): Promise<boolean> {
-
     /// TODO create getters to access these
     const beforeEach = this.getBeforeEach(node); // TODO make Array
-    const afterEach = this.getAfterEach(node);   // TODO make Array
+    const afterEach = this.getAfterEach(node); // TODO make Array
     const maxRuntime = this.getMaxRuntime(node);
     const minIterations = this.getMinIterations(node);
     const iterationCount = this.getIterationCount(node);
@@ -195,7 +199,7 @@ export class BenchContext {
         iterationCount,
       ),
     );
-    
+
     // 2. obtain each property from wasm calculations
     if (calculateMean) node.mean = this.wasm!.__mean();
     if (calculateMedian) node.median = this.wasm!.__median();
@@ -215,7 +219,7 @@ export class BenchContext {
     return true;
   }
 
-  /// TODO move into static utility class 
+  /// TODO move into static utility class
   /** use custom initializer to populate buffer array in assembly **/
   newI32Array(values: number[]): number {
     const ptr = this.wasm!.__newI32Array(values.length);
@@ -247,13 +251,13 @@ export class BenchContext {
     this.effectiveCalculateMinimum = value === 1;
   }
 
-   /** enable our node to collect variance values */
-   setCalculateVariance(value: 1 | 0): void {
+  /** enable our node to collect variance values */
+  setCalculateVariance(value: 1 | 0): void {
     this.effectiveCalculateVariance = value === 1;
   }
 
-   /** enable our node to collect standard deviation values */
-   setCalculateStdDev(value: 1 | 0): void {
+  /** enable our node to collect standard deviation values */
+  setCalculateStdDev(value: 1 | 0): void {
     this.effectiveCalculateStdDev = value === 1;
   }
 
@@ -264,5 +268,5 @@ export class BenchContext {
   // TODO implement function max run time
 
   /// NOTES: consider creating globals/ constants static class
-  ///        to keep track of some of these default values. 
+  ///        to keep track of some of these default values.
 }

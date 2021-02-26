@@ -6,10 +6,9 @@ type bool = 1 | 0;
  * provided by `as-bench` benchmark suite
  */
 export interface IBenchExports {
-
   /** Call a function by it's table index. */
   __call(index: number): void;
-  
+
   /** configuration for collection options */
   __getDefaultCalculateMean(): bool;
   __getDefaultCalculateMedian(): bool;
@@ -20,13 +19,13 @@ export interface IBenchExports {
   __getDefaultIterationCount(): number;
   __getDefaultMinIterationCount(): number;
   __getDefaultMaxRuntime(): number;
-  
+
   /** make sure we run this many times*/
   __ensureRunCount(count: number): void;
- 
+
   /** returns how many times we have ran the bench */
   __getRuns(): number;
-  
+
   /** runs a test a specified amount */
   __runIterations(
     callback: number,
@@ -34,10 +33,10 @@ export interface IBenchExports {
     afterEach: number,
     iterations: number,
   ): number;
-  
+
   /** clears current run indices */
   __resetRunIndex(): void;
-  
+
   /** calcuation functions for runs */
   __mean(): number;
   __median(): number;
@@ -45,7 +44,7 @@ export interface IBenchExports {
   __minimum(): number;
   __variance(): number;
   __stdDev(): number;
-  
+
   /// TODO should be moved into a utility class
   /** 32bit integer helper  */
   __newI32Array(values: number[]): number;
