@@ -30,10 +30,10 @@ export class BenchNode {
   collectMean: boolean | null = null;
 
   /** Determine if this node should collect the maximum runtime of the BenchNode runs. */
-  collectMax: boolean | null = null;
+  collectMaximum: boolean | null = null;
 
   /** Determine if this node should collect the minimum runtime of the BenchNode runs. */
-  collectMin: boolean | null = null;
+  collectMinimum: boolean | null = null;
 
   /** Determine if this node should collect the variance of the runtimes in this BenchNode. */
   collectVariance: boolean | null = null;
@@ -49,9 +49,6 @@ export class BenchNode {
 
   /** The number of iterations per poll. */
   iterationCount: number | null = null;
-
-  /** Useful for eventually calculating the standard deviation. */
-  private calculatedVariance: number | null = null;
 
   /** The starting time for this node. */
   startTime: number = 0;
@@ -70,11 +67,11 @@ export class BenchNode {
   /** The calculated median value. */
   median: number | null = null;
 
-  /** The calculated max value. */
-  max: number | null = null;
+  /** The calculated maximum value. */
+  maximum: number | null = null;
 
-  /** The calcualted min value. */
-  min: number | null = null;
+  /** The calcualted minimum value. */
+  minimum: number | null = null;
 
   /** The calculate variance. */
   variance: number | null = null;

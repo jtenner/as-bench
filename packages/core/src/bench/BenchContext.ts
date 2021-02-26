@@ -1,10 +1,17 @@
 import { IBenchExports } from "../util/IBenchExports";
 import { BenchNode } from "./BenchNode";
-import { ASUtil } from "@assemblyscript/loader";
+import { ASUtil } from "assemblyscript/lib/loader";
 import { performance } from "perf_hooks";
 
+/** Promise change that is used  */
 const timeout = () => new Promise((resolve) => setImmediate(resolve));
 
+/**
+ * The root class that handles and manages our Benchmark session. The context
+ * is responsible for registering our wasm instance, import API, and walking
+ * the bench tree hiearchy. It also slices and dices, while executing 
+ * recursive benchmarks
+ */
 export class BenchContext {
   constructor() {}
   wasm: (IBenchExports & ASUtil) | null = null;
@@ -18,12 +25,21 @@ export class BenchContext {
   effectiveCalculateMedian: boolean | null = null;
   defaultCalculateMedian: boolean | null = null;
 
-  effectiveCalculateMax: boolean | null = null;
-  defaultCalculateMax: boolean | null = null;
+  effectiveCalculateMaximum: boolean | null = null;
+  defaultCalculateMaximum: boolean | null = null;
 
-  effectiveCalculateMin: boolean | null = null;
-  defaultCalculateMin: boolean | null = null;
+  effectiveCalculateMinimum: boolean | null = null;
+  defaultCalculateMinimum: boolean | null = null;
 
+  effectiveCalculateVariance: boolean | null = null;
+  defaultCalculateVariance: boolean | null = null;
+
+  effectiveCalculateStdDev: boolean | null = null;
+  defaultCalculateStdDev: boolean | null = null;
+
+  // TODO implement default config for min/max itr and max runtime
+
+  /** helper function that sets up our import graph for wasm instance */
   generateImports(imports: any): any {
     return Object.assign({}, imports, {
       performance,
@@ -31,12 +47,15 @@ export class BenchContext {
         reportBenchNode: this.reportBenchNode.bind(this),
         setCalculateMean: this.setCalculateMean.bind(this),
         setCalculateMedian: this.setCalculateMedian.bind(this),
-        setCalculateMax: this.setCalculateMax.bind(this),
-        setCalculateMin: this.setCalculateMax.bind(this)
+        setCalculateMaximum: this.setCalculateMaximum.bind(this),
+        setCalculateMinimum: this.setCalculateMaximum.bind(this),
+        setCalculateVariance: this.setCalculateVariance.bind(this),
+        setCalculateStdDev: this.setCalculateStdDev.bind(this)
       },
     });
   }
 
+  /** queries our bench node from tree and updates its properties before running */
   reportBenchNode(strPtr: number, callback: number, isGroup: 1 | 0): void {
     // report that a group/benchmark needs to be addressed
     const node = new BenchNode();
@@ -61,14 +80,19 @@ export class BenchContext {
     // these values only apply to the node being generated
     this.effectiveCalculateMean = null;
     this.effectiveCalculateMedian = null;
-    this.effectiveCalculateMax = null;
-    this.effectiveCalculateMin = null;
+    this.effectiveCalculateMaximum = null;
+    this.effectiveCalculateMinimum = null;
+    this.effectiveCalculateVariance = null;
+    this.effectiveCalculateStdDev = null;
   }
 
+  /// TODO Should be part of a static utility class
+  /** Helper function used translate string pointer into literal string for js */
   getString(ptr: number, defaultValue: string): string {
     return ptr === 0 ? defaultValue : this.wasm!.__getString(ptr);
   }
 
+  /** Run our WebAssembly instance and set default configuration */
   async run(wasm: ASUtil & IBenchExports): Promise<void> {
     this.wasm = wasm;
 
@@ -78,13 +102,16 @@ export class BenchContext {
     // get the default value
     this.defaultCalculateMean = this.wasm!.__getDefaultCalculateMean() === 1;
     this.defaultCalculateMedian = this.wasm!.__getDefaultCalculateMedian() === 1;
-    this.defaultCalculateMax = this.wasm!.__getDefaultCalculateMax() === 1;
-    this.defaultCalculateMin = this.wasm!.__getDefaultCalculateMin() === 1;
-
+    this.defaultCalculateMaximum = this.wasm!.__getDefaultCalculateMaximum() === 1;
+    this.defaultCalculateMinimum = this.wasm!.__getDefaultCalculateMinimum() === 1;
+    this.defaultCalculateVariance = this.wasm!.__getDefaultCalculateVariance() === 1;
+    this.defaultCalculateStdDev = this.wasm!.__getDefaultCalculateStdDev() === 1;
+    
+    // wait for node tree walker to explore each node
     await this.visit(this.root);
   }
 
-  // bench node tree explorer
+  /** Bench node tree explorer */
   async visit(node: BenchNode): Promise<boolean> {
     if (node.isGroup) {
       // beforeAll callbacks get called once
@@ -108,17 +135,19 @@ export class BenchContext {
     return true;
   }
 
+  /** evaluate our visits to bench tree and execute run procedure */
   async evaluate(node: BenchNode): Promise<boolean> {
+
     /// TODO create getters to access these
-    const beforeEach = this.getBeforeEach(node);
-    const afterEach = this.getAfterEach(node);
+    const beforeEach = this.getBeforeEach(node); // TODO make Array
+    const afterEach = this.getAfterEach(node);   // TODO make Array
     const maxRuntime = this.getMaxRuntime(node);
     const minIterations = this.getMinIterations(node);
     const iterationCount = this.getIterationCount(node);
     const calculateMean = this.getCalculateMean(node);
     const calculateMedian = this.getCalculateMedian(node);
-    const calculateMax = this.getCalculateMax(node);
-    const calculateMin = this.getCalculateMin(node);
+    const calculateMaximum = this.getCalculateMaximum(node);
+    const calculateMinimum = this.getCalculateMinimum(node);
     const calculateVariance = this.getCalculateVariance(node);
     const calculateStdDev = this.getCalculateStdDev(node);
 
@@ -148,7 +177,7 @@ export class BenchContext {
         );
         if (count > minIterations) break;
         await timeout();
-        // TODO: Do we really need a finished flag?
+        // TODO: Do we really need a finished flag? -- not if we properly await while wasm iterates.
         // if (this.finished) break;
       }
     } catch (exception) {
@@ -170,10 +199,10 @@ export class BenchContext {
     // 2. obtain each property from wasm calculations
     if (calculateMean) node.mean = this.wasm!.__mean();
     if (calculateMedian) node.median = this.wasm!.__median();
-    if (calculateMax) node.max = this.wasm!.__max();
-    if (calculateMin) node.min = this.wasm!.__min();
-    if (calculateStdDev) node.stdDev = this.wasm!.__stdDev();
+    if (calculateMaximum) node.maximum = this.wasm!.__maximum();
+    if (calculateMinimum) node.minimum = this.wasm!.__minimum();
     if (calculateVariance) node.variance = this.wasm!.__variance();
+    if (calculateStdDev) node.stdDev = this.wasm!.__stdDev();
 
     // 3. unpin the arrays
     this.wasm!.__unpin(beforeEachArray);
@@ -186,6 +215,8 @@ export class BenchContext {
     return true;
   }
 
+  /// TODO move into static utility class 
+  /** use custom initializer to populate buffer array in assembly **/
   newI32Array(values: number[]): number {
     const ptr = this.wasm!.__newI32Array(values.length);
     this.wasm!.__pin(ptr);
@@ -196,19 +227,42 @@ export class BenchContext {
     return ptr;
   }
 
+  /** enable our node to collect mean values */
   setCalculateMean(value: 1 | 0): void {
     this.effectiveCalculateMean = value === 1;
   }
 
+  /** enable our node to collect median values */
   setCalculateMedian(value: 1 | 0): void {
     this.effectiveCalculateMedian = value === 1;
   }
 
-  setCalculateMax(value: 1 | 0): void {
-    this.effectiveCalculateMax = value === 1;
+  /** enable our node to collect maximum values */
+  setCalculateMaximum(value: 1 | 0): void {
+    this.effectiveCalculateMaximum = value === 1;
   }
 
-  setCalculateMin(value: 1 | 0): void {
-    this.effectiveCalculateMin = value === 1;
+  /** enable our node to collect minimum values */
+  setCalculateMinimum(value: 1 | 0): void {
+    this.effectiveCalculateMinimum = value === 1;
   }
+
+   /** enable our node to collect variance values */
+   setCalculateVariance(value: 1 | 0): void {
+    this.effectiveCalculateVariance = value === 1;
+  }
+
+   /** enable our node to collect standard deviation values */
+   setCalculateStdDev(value: 1 | 0): void {
+    this.effectiveCalculateStdDev = value === 1;
+  }
+
+  // TODO implement functions min iteration
+
+  // TODO implement function max iteration
+
+  // TODO implement function max run time
+
+  /// NOTES: consider creating globals/ constants static class
+  ///        to keep track of some of these default values. 
 }
