@@ -86,6 +86,8 @@ export class BenchContext {
     const iterationCount = this.getIterationCount(node);
     const calculateMean = this.getCalculateMean(node);
     const calculateMedian = this.getCalculateMedian(node);
+    const calculateMax = this.getCalculateMax(node);
+    const calculateMin = this.getCalculateMin(node);
 
     const i32StaticArrayID = this.wasm!.__getStaticArrayI32ID();
     // We need the __pin() method
@@ -138,7 +140,9 @@ export class BenchContext {
     // 2. obtain each property from wasm calculations
     if (calculateMean) node.mean = this.wasm!.__mean();
     if (calculateMedian) node.median = this.wasm!.__median();
-
+    if (calculateMax) node.max = this.wasm!.__max();
+    if (calculateMin) node.min = this.wasm!.__min();
+    
     // 3. unpin the arrays
     this.wasm!.__unpin(beforeEachArray);
     this.wasm!.__unpin(afterEachArray);

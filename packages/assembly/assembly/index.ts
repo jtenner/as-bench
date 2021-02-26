@@ -118,7 +118,7 @@ export function __runIterations(callback: i32, beforeEach: StaticArray<i32>, aft
     call_indirect(callback);
 
     // end the timer
-    runs[runIndex++] = now() - start;
+    unchecked(runs[runIndex++] = now() - start);
 
     // call every afterEach callback
     for (let i = 0; i < afterEachLength; i++) call_indirect(unchecked(afterEach[i]));
@@ -131,7 +131,7 @@ export function __mean(): f64 {
   if (runIndex == 0) return NaN;
   let sum = 0;
   for (let i = 0; i < runIndex; i++) {
-    sum += runs[i];
+    sum += unchecked(runs[i]);
   }
   return <f64>sum / <f64>runIndex;
 }
@@ -146,3 +146,20 @@ export function __median(): f64 {
     : (runs[halfLength] + runs[halfLength + 1]) / 2;
 }
 
+export function __max(): f64 {
+  if (runIndex == 0) return NaN;
+  let maxValue: f64 = 0;
+  for (let i = 0; i < runIndex; i++) {
+    maxValue = max<f64>(maxValue, unchecked(runs[i]));
+  }
+  return maxValue;
+}
+
+export function __min(): f64 {
+  if (runIndex == 0) return NaN;
+  let minValue: f64 = unchecked(runs[0]);
+  for (let i = 1; i < runIndex; i++) {
+    minValue = min<f64>(minValue, unchecked(runs[i]));
+  }
+  return minValue;
+}
