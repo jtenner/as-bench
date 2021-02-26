@@ -15,12 +15,24 @@ export class BenchContext {
   effectiveCalculateMean: boolean | null = null;
   defaultCalculateMean: boolean | null = null;
 
+  effectiveCalculateMedian: boolean | null = null;
+  defaultCalculateMedian: boolean | null = null;
+
+  effectiveCalculateMax: boolean | null = null;
+  defaultCalculateMax: boolean | null = null;
+
+  effectiveCalculateMin: boolean | null = null;
+  defaultCalculateMin: boolean | null = null;
+
   generateImports(imports: any): any {
     return Object.assign({}, imports, {
       performance,
       __asbench: {
         reportBenchNode: this.reportBenchNode.bind(this),
         setCalculateMean: this.setCalculateMean.bind(this),
+        setCalculateMedian: this.setCalculateMedian.bind(this),
+        setCalculateMax: this.setCalculateMax.bind(this),
+        setCalculateMin: this.setCalculateMax.bind(this)
       },
     });
   }
@@ -48,6 +60,9 @@ export class BenchContext {
 
     // these values only apply to the node being generated
     this.effectiveCalculateMean = null;
+    this.effectiveCalculateMedian = null;
+    this.effectiveCalculateMax = null;
+    this.effectiveCalculateMin = null;
   }
 
   getString(ptr: number, defaultValue: string): string {
@@ -62,10 +77,14 @@ export class BenchContext {
 
     // get the default value
     this.defaultCalculateMean = this.wasm!.__getDefaultCalculateMean() === 1;
+    this.defaultCalculateMedian = this.wasm!.__getDefaultCalculateMedian() === 1;
+    this.defaultCalculateMax = this.wasm!.__getDefaultCalculateMax() === 1;
+    this.defaultCalculateMin = this.wasm!.__getDefaultCalculateMin() === 1;
 
     await this.visit(this.root);
   }
 
+  // bench node tree explorer
   async visit(node: BenchNode): Promise<boolean> {
     if (node.isGroup) {
       // beforeAll callbacks get called once
@@ -73,6 +92,7 @@ export class BenchContext {
         this.wasm!.__call(node.beforeAll[i]);
       }
 
+      // visit all of the node's child nodes recursively
       for (const child of node.children) {
         const result = await this.visit(child);
         if (!result) return false;
@@ -89,6 +109,7 @@ export class BenchContext {
   }
 
   async evaluate(node: BenchNode): Promise<boolean> {
+    /// TODO create getters to access these
     const beforeEach = this.getBeforeEach(node);
     const afterEach = this.getAfterEach(node);
     const maxRuntime = this.getMaxRuntime(node);
@@ -145,6 +166,7 @@ export class BenchContext {
         iterationCount,
       ),
     );
+    
     // 2. obtain each property from wasm calculations
     if (calculateMean) node.mean = this.wasm!.__mean();
     if (calculateMedian) node.median = this.wasm!.__median();
@@ -169,15 +191,24 @@ export class BenchContext {
     this.wasm!.__pin(ptr);
     const buffer = Buffer.from(this.wasm!.memory!.buffer);
     for (let i = 0; i < values.length; i++) {
-      buffer.writeInt32LE(
-        values[i],
-        ptr + (i << 3)
-      );
+      buffer.writeInt32LE(values[i], ptr + (i << 3));
     }
     return ptr;
   }
 
   setCalculateMean(value: 1 | 0): void {
     this.effectiveCalculateMean = value === 1;
+  }
+
+  setCalculateMedian(value: 1 | 0): void {
+    this.effectiveCalculateMedian = value === 1;
+  }
+
+  setCalculateMax(value: 1 | 0): void {
+    this.effectiveCalculateMax = value === 1;
+  }
+
+  setCalculateMin(value: 1 | 0): void {
+    this.effectiveCalculateMin = value === 1;
   }
 }

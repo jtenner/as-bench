@@ -193,3 +193,15 @@ export function __newI32Array(length: u32): StaticArray<i32> {
 // @ts-ignore: valid decorator
 @external("__asbench", "setCalculateMean") @global
 declare function mean(willCalculate: bool): void;
+
+// @ts-ignore: valid decorator
+@external("__asbench", "setCalculateMedian") @global
+declare function median(willCalculate: bool): void;
+
+// @ts-ignore: valid decorator
+@external("__asbench", "setCalculateMax") @global
+declare function max(willCalculate: bool): void;
+
+// @ts-ignore: valid decorator
+@external("__asbench", "setCalculateMin") @global
+declare function min(willCalculate: bool): void;
