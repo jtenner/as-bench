@@ -14,7 +14,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "prettier --write \"**/src/**/*.ts\" \"**/*.md\" \"**/*.json\"",
+    "pretty": "prettier --write \"**/src/**/*.ts\" \"**/*.md\" \"**/*.json\"",
     "lint": "eslint --fix --max-warnings 0 --ext ts \"packages/**/assembly/**/*.ts\" \"packages/**/core/**/*.ts\""
   },
   "repository": {

@@ -30,10 +30,10 @@ export class BenchNode {
   collectMean: boolean | null = null;
 
   /** Determine if this node should collect the maximum runtime of the BenchNode runs. */
-  collectMax: boolean | null = null;
+  collectMaximum: boolean | null = null;
 
   /** Determine if this node should collect the minimum runtime of the BenchNode runs. */
-  collectMin: boolean | null = null;
+  collectMinimum: boolean | null = null;
 
   /** Determine if this node should collect the variance of the runtimes in this BenchNode. */
   collectVariance: boolean | null = null;
@@ -44,85 +44,40 @@ export class BenchNode {
   /** The minimum number of iterations this BenchNode must run. */
   minIterations: number | null = null;
 
-  /** The maximum number of iterations this BenchNode can run. */
-  maxIterations: number | null = null;
-
-  /** The minimum amount of milliseconds this BenchNode must run. */
-  minRuntime: number | null = null;
-
   /** The maximum number of milliseconds this BenchNode can run. */
   maxRuntime: number | null = null;
 
-  /** Useful for eventually calculating the standard deviation. */
-  private calculatedVariance: number | null = null;
+  /** The number of iterations per poll. */
+  iterationCount: number | null = null;
 
-  /** Actually calculate the mean value in ms. */
-  get mean(): number {
-    if (this.runs.length === 0) return NaN;
-    const runs = this.runs;
-    const length = runs.length;
-    let sum = 0;
-    for (let i = 0; i < length; i++) {
-      sum += runs[i];
-    }
-    return sum / length;
+  /** The starting time for this node. */
+  startTime: number = 0;
+
+  /** The ending time for this node. */
+  endTime: number = 0;
+
+  /** The total runtime for this node. */
+  get runtime(): number {
+    return this.endTime - this.startTime;
   }
 
-  /** Actually calculate the median value. */
-  get median(): number {
-    if (this.runs.length === 0) return NaN;
-    const length = this.runs.length;
-    const odd = length & 1;
-    const halfLength = length / 2;
-    this.runs.sort();
-    return odd === 1
-      ? this.runs[Math.ceil(halfLength)]
-      : (this.runs[halfLength] + this.runs[halfLength + 1]) / 2;
-  }
+  /** The calculated mean value in ms. */
+  mean: number | null = null;
 
-  /** Actually calculate the max value. */
-  get max(): number {
-    if (this.runs.length === 0) return NaN;
-    let max = 0;
-    for (let i = 0; i < this.runs.length; i++) {
-      let value = this.runs[i];
-      if (value > max) max = value;
-    }
-    return max;
-  }
+  /** The calculated median value. */
+  median: number | null = null;
 
-  /** Actually calculate the min value. */
-  get min(): number {
-    if (this.runs.length === 0) return NaN;
-    let min = this.runs[0];
-    for (let i = 1; i < this.runs.length; i++) {
-      let value = this.runs[i];
-      if (value < min) min = value;
-    }
-    return min;
-  }
+  /** The calculated maximum value. */
+  maximum: number | null = null;
 
-  /** Actually calculate the variance value. */
-  get variance(): number {
-    if (this.runs.length === 0) return NaN;
-    if (this.calculatedVariance !== null) return this.calculatedVariance;
-    const avg = this.mean;
-    const length = this.runs.length;
-    let i = length,
-      v = 0;
+  /** The calcualted minimum value. */
+  minimum: number | null = null;
 
-    while (i--) {
-      v += (this.runs[i] - avg) ** 2;
-    }
-    v /= length;
+  /** The calculate variance. */
+  variance: number | null = null;
 
-    return (this.calculatedVariance = v);
-  }
-
-  /** Actually calculate the variance value. */
-  get stdDev(): number {
-    return Math.sqrt(this.variance);
-  }
+  /** The calculated standard deviation. */
+  stdDev: number | null = null;
 
   /** The children of this BenchNode. */
   children: BenchNode[] = [];

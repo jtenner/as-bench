@@ -25,12 +25,12 @@ declare function getDefaultCalculateMedian(): boolean
 /**
  * This function calculates the maxoum value of the given bench.
  */
-declare function getDefaultCalculateMax(): boolean
+declare function getDefaultCalculateMaximum(): boolean
 
 /**
  * This function calculates the minimum value of the given bench.
  */
-declare function getDefaultCalculateMin(): boolean
+declare function getDefaultCalculateMinimum(): boolean
 
 /**
  * This function calculates the difference between test in our bench.

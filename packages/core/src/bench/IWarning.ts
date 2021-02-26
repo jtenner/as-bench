@@ -8,7 +8,7 @@ export interface IWarning {
 
   /** This is the generated warning message. */
   message: string;
-  
+
   /** This is the stack trace. */
   stackTrace: string;
 }

@@ -10,8 +10,9 @@
     "test": "run-s asb",
     "tsc:all": "exit 0",
     "//// BUILDING //////////////////////////////////////////////////////": "",
-    "build:debug": "asc assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap --debug ",
-    "build": "asc assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap -O3z --converge"
+    "build:debug": "node \"../../node_modules/assemblyscript/bin/asc\" assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap --debug ",
+    "build": "node \"../../node_modules/assemblyscript/bin/asc\" assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap -O3z --converge",
+    "//^ TODO replace with our cli run command or something better to test compilation": ""
   },
   "repository": {
     "type": "git",
