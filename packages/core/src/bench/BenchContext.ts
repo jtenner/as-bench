@@ -12,11 +12,15 @@ export class BenchContext {
   root: BenchNode = new BenchNode();
   currentNode: BenchNode = this.root;
 
+  effectiveCalculateMean: boolean | null = null;
+  defaultCalculateMean: boolean | null = null;
+
   generateImports(imports: any): any {
     return Object.assign({}, imports, {
       performance,
       __asbench: {
         reportBenchNode: this.reportBenchNode.bind(this),
+        setCalculateMean: this.setCalculateMean.bind(this),
       },
     });
   }
@@ -41,6 +45,9 @@ export class BenchContext {
       this.wasm!.__call(callback);
       this.currentNode = currentNode;
     }
+
+    // these values only apply to the node being generated
+    this.effectiveCalculateMean = null;
   }
 
   getString(ptr: number, defaultValue: string): string {
@@ -52,6 +59,9 @@ export class BenchContext {
 
     // explicitly start the module execution
     this.wasm._start();
+
+    // get the default value
+    this.defaultCalculateMean = this.wasm!.__getDefaultCalculateMean() === 1;
 
     await this.visit(this.root);
   }
@@ -146,9 +156,11 @@ export class BenchContext {
     // 3. unpin the arrays
     this.wasm!.__unpin(beforeEachArray);
     this.wasm!.__unpin(afterEachArray);
+
     // 4. set the start/end and end times
     node.startTime = start;
     node.endTime = end;
+
     return true;
   }
 
@@ -163,5 +175,9 @@ export class BenchContext {
       );
     }
     return ptr;
+  }
+
+  setCalculateMean(value: 1 | 0): void {
+    this.effectiveCalculateMean = value === 1;
   }
 }

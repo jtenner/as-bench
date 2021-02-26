@@ -189,3 +189,7 @@ export function __stdDev(): f64 {
 export function __newI32Array(length: u32): StaticArray<i32> {
   return new StaticArray<i32>(length);
 }
+
+// @ts-ignore: valid decorator
+@external("__asbench", "setCalculateMean") @global
+declare function mean(willCalculate: bool): void;
