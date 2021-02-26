@@ -16,9 +16,9 @@ export class BenchContext {
   constructor() {}
 
   /** The web assembly instance for this benchmark module. */
-  wasm: WebAssembly.Instance | null = null;
+  wasm: (WebAssembly.Instance & ASUtil & IBenchExports) | null = null;
   /** The web assembly memory associated with this benchmark suite. */
-  memory: WebAssembly.Memory | null = null;
+  memory: WebAssembly.Memory | undefined = undefined;
 
   /** Cast the exports as IBenchExports. */
   get exports(): IBenchExports {
@@ -106,9 +106,11 @@ export class BenchContext {
   }
 
   /** Run our WebAssembly instance and set default configuration */
-  async run(wasm: ASUtil & IBenchExports): Promise<void> {
+  async run(
+    wasm: WebAssembly.Instance & ASUtil & IBenchExports,
+  ): Promise<void> {
     this.wasm = wasm;
-    this.memory = memory;
+    this.memory = wasm.memory;
 
     // explicitly start the module execution
     this.wasm._start();
@@ -236,13 +238,15 @@ export class BenchContext {
   /// TODO move into static utility class
   /** use custom initializer to populate buffer array in assembly **/
   newI32Array(values: number[]): number {
-    const ptr = this.wasm!.__newI32Array(values.length);
-    this.wasm!.__pin(ptr);
-    const buffer = Buffer.from(this.wasm!.memory!.buffer);
-    for (let i = 0; i < values.length; i++) {
-      buffer.writeInt32LE(values[i], ptr + (i << 3));
+    const length: number = values.length,
+          $arr = this.wasm!.__newI32Array(length),
+          buffer = Buffer.from(this.wasm!.memory!.buffer);
+
+    this.wasm!.__pin($arr);
+    for (let i = 0; i < length; i++) {
+      buffer.writeInt32LE(values[i], $arr + (i << 3));
     }
-    return ptr;
+    return $arr;
   }
 
   /** enable our node to collect mean values */

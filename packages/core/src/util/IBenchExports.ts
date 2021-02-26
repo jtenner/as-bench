@@ -6,7 +6,6 @@ type bool = 1 | 0;
  * provided by `as-bench` benchmark suite
  */
 export interface IBenchExports {
-  
   /** Call a function by it's table index. */
   __call(index: number): void;
   __getDefaultCalculateMean(): bool;
@@ -52,5 +51,5 @@ export interface IBenchExports {
 
   /// TODO should be moved into a utility class
   /** 32bit integer helper  */
-  __newI32Array(values: number[]): number;
+  __newI32Array(length: number): number;
 }

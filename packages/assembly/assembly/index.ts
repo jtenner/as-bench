@@ -114,7 +114,7 @@ export function __getDefaultMaxRuntime(): i32 {
     : 10000;
 }
 
-//TODO move into a static utility class
+// TODO move into a static utility class
 /** helper function that returns our static array from memory  */
 export function __getStaticArrayI32ID(): i32 {
   return <i32>idof<StaticArray<i32>>();
@@ -213,13 +213,13 @@ export function __variance(): f64 {
   return (cachedVariance = val);
 }
 
-///TODO is this the correct standard deviation algo?
+/// TODO is this the correct standard deviation algo?
 /** calculate our standard deviation. */
 export function __stdDev(): f64 {
   return sqrt(__variance());
 }
 
-///TODO move into static utility class
+/// TODO move into static utility class
 /** helper function used to create skeleton arrays to buffer */
 export function __newI32Array(length: u32): StaticArray<i32> {
   return new StaticArray<i32>(length);
