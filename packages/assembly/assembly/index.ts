@@ -253,6 +253,18 @@ declare function variance(enable: bool): void;
 @external("__asbench", "setCalculateStdDev") @global
 declare function stdDev(enable: bool): void;
 
+// @ts-ignore: valid decorator
+@external("__asbench", "setMinimumIterationCount") @global
+declare function minimumIterations(count: i32): void;
+
+// @ts-ignore: valid decorator
+@external("__asbench", "setIterationCount") @global
+declare function iterations(count: i32): void;
+
+// @ts-ignore: valid decorator
+@external("__asbench", "setMaxRuntime") @global
+declare function maxRuntime(count: i32): void;
+
 ///////////////////////////////////////////////////////////
 /// NATIVE IMPORTS
 ///////////////////////////////////////////////////////////
