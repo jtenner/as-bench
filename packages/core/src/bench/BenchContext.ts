@@ -71,8 +71,12 @@ export class BenchContext {
     const afterEachArray = this.wasm!.__newArray(i32StaticArrayID, afterEach);
     this.wasm!.__pin(afterEachArray);
 
-    const start = performance.now();
+    // set the count to 0
     let count = 0;
+    this.wasm!.__resetRunIndex();
+
+    // start runtime for the entire node
+    const start = performance.now();
     try {
       while (true) {
         const now = performance.now();
@@ -89,17 +93,23 @@ export class BenchContext {
         );
         if (count > minIterations) break;
         await timeout();
-        if (this.finished) break;
+        // TODO: Do we really need a finished flag?
+        // if (this.finished) break;
       }
     } catch (exception) {
       // we stop execution all the way up the stack
       return false;
     }
+    // end runtime for the entire node
+    const end = performance.now();
     // TODO: Finalization of the node
     // 1. get all the runtimes via the memory
     // 2. obtain each property from wasm calculations
 
-    // 3. unpin the 
+    // 3. unpin the arrays
+    // 4. set the start/end and end times
+    node.startTime = start;
+    node.endTime = end;
     this.wasm!.__unpin(beforeEachArray);
     this.wasm!.__unpin(afterEachArray);
     return true;

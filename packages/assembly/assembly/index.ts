@@ -4,6 +4,10 @@ declare function now(): f64;
 let runs = new StaticArray<f64>(__getDefaultIterationCount());
 let runIndex: i32 = 0;
 
+export function __resetRunIndex(): void {
+  runIndex = 0;
+}
+
 export function __ensureRunCount(count: i32): void {
   if (runs.length < count) {
     let newRuns = new StaticArray<f64>(count);

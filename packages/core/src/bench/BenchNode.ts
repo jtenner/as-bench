@@ -53,6 +53,16 @@ export class BenchNode {
   /** Useful for eventually calculating the standard deviation. */
   private calculatedVariance: number | null = null;
 
+  /** The starting time for this node. */
+  startTime: number = 0;
+
+  /** The ending time for this node. */
+  endTime: number = 0;
+
+  /** The total runtime for this node. */
+  get runtime(): number { return this.endTime - this.startTime; }
+
+
   /** Actually calculate the mean value in ms. */
   get mean(): number {
     if (this.runs.length === 0) return NaN;
