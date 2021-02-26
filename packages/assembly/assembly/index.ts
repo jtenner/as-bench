@@ -1,3 +1,4 @@
+// @ts-ignore valid decorator
 @external("performance", "now")
 declare function now(): f64;
 
@@ -183,4 +184,8 @@ export function __variance(): f64 {
 
 export function __stdDev(): f64 {
   return sqrt(__variance());
+}
+
+export function __newI32Array(length: u32): StaticArray<i32> {
+  return new StaticArray<i32>(length);
 }

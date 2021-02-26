@@ -19,7 +19,6 @@ export interface IBenchExports {
   __getDefaultMaxRuntime(): number;
   __ensureRunCount(count: number): void;
   __getRuns(): number;
-  __getStaticArrayI32ID(): number;
   __runIterations(
     callback: number,
     beforeEach: number,
@@ -33,4 +32,5 @@ export interface IBenchExports {
   __min(): number;
   __variance(): number;
   __stdDev(): number;
+  __newI32Array(): number;
 }

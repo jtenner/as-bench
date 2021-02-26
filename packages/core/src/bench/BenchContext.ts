@@ -91,13 +91,9 @@ export class BenchContext {
     const calculateVariance = this.getCalculateVariance(node);
     const calculateStdDev = this.getCalculateStdDev(node);
 
-    const i32StaticArrayID = this.wasm!.__getStaticArrayI32ID();
-    // We need the __pin() method
-    const beforeEachArray = this.wasm!.__newArray(i32StaticArrayID, beforeEach);
-    this.wasm!.__pin(beforeEachArray);
-
-    const afterEachArray = this.wasm!.__newArray(i32StaticArrayID, afterEach);
-    this.wasm!.__pin(afterEachArray);
+    // This method returns a pinned array, must unpin it later
+    const beforeEachArray = this.newI32Array(beforeEach);
+    const afterEachArray = this.newI32Array(afterEach);
 
     // set the count to 0
     let count = 0;
@@ -154,5 +150,18 @@ export class BenchContext {
     node.startTime = start;
     node.endTime = end;
     return true;
+  }
+
+  newI32Array(values: number[]): number {
+    const ptr = this.wasm!.__newI32Array(values.length);
+    this.wasm!.__pin(ptr);
+    const buffer = Buffer.from(this.wasm!.memory!.buffer);
+    for (let i = 0; i < values.length; i++) {
+      buffer.writeInt32LE(
+        values[i],
+        ptr + (i << 3)
+      );
+    }
+    return ptr;
   }
 }
