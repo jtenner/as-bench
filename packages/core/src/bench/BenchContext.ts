@@ -10,6 +10,7 @@ export class BenchContext {
   wasm: (IBenchExports & ASUtil) | null = null;
 
   root: BenchNode = new BenchNode();
+  currentNode: BenchNode = this.root;
 
   generateImports(imports: any): any {
     return Object.assign({}, imports, {
@@ -20,13 +21,33 @@ export class BenchContext {
     });
   }
 
-  reportBenchNode(strPtr: number, callback: number, isGroup: 1 | 0): void {}
+  reportBenchNode(strPtr: number, callback: number, isGroup: 1 | 0): void {
+    // report that a group/benchmark needs to be addressed
+    const node = new BenchNode();
+    const currentNode = this.currentNode;
+
+    // set initial properties
+    node.parent = currentNode;
+    node.isGroup = isGroup === 1;
+    node.callback = callback;
+    node.title = this.getString(strPtr, "Benchmark Name is null");
+
+    // append it to the current node's children
+    currentNode.children.push(node);
+
+    // if it's a group node, we need to visit it's children immediately
+    if (isGroup === 1) {
+      this.currentNode = node;
+      this.wasm!.__call(callback);
+      this.currentNode = currentNode;
+    }
+  }
 
   getString(ptr: number, defaultValue: string): string {
     return ptr === 0 ? defaultValue : this.wasm!.__getString(ptr);
   }
 
-  async run(wasm: ASUtil & IBenchExports): void {
+  async run(wasm: ASUtil & IBenchExports): Promise<void> {
     this.wasm = wasm;
 
     // explicitly start the module execution
