@@ -70,49 +70,17 @@ export class BenchNode {
   /** The calculated median value. */
   median: number | null = null;
 
-  /** Actually calculate the max value. */
-  get max(): number {
-    if (this.runs.length === 0) return NaN;
-    let max = 0;
-    for (let i = 0; i < this.runs.length; i++) {
-      let value = this.runs[i];
-      if (value > max) max = value;
-    }
-    return max;
-  }
+  /** The calculated max value. */
+  max: number | null = null;
 
-  /** Actually calculate the min value. */
-  get min(): number {
-    if (this.runs.length === 0) return NaN;
-    let min = this.runs[0];
-    for (let i = 1; i < this.runs.length; i++) {
-      let value = this.runs[i];
-      if (value < min) min = value;
-    }
-    return min;
-  }
+  /** The calcualted min value. */
+  min: number | null = null;
 
-  /** Actually calculate the variance value. */
-  get variance(): number {
-    if (this.runs.length === 0) return NaN;
-    if (this.calculatedVariance !== null) return this.calculatedVariance;
-    const avg = this.mean;
-    const length = this.runs.length;
-    let i = length,
-      v = 0;
+  /** The calculate variance. */
+  variance: number | null = null;
 
-    while (i--) {
-      v += (this.runs[i] - avg) ** 2;
-    }
-    v /= length;
-
-    return (this.calculatedVariance = v);
-  }
-
-  /** Actually calculate the variance value. */
-  get stdDev(): number {
-    return Math.sqrt(this.variance);
-  }
+  /** The calculated standard deviation. */
+  stdDev: number | null = null;
 
   /** The children of this BenchNode. */
   children: BenchNode[] = [];

@@ -163,3 +163,24 @@ export function __min(): f64 {
   }
   return minValue;
 }
+
+let cachedVariance: f64 = NaN;
+
+export function __variance(): f64 {
+  if (runIndex == 0) return NaN;
+  if (!isNaN(cachedVariance)) return cachedVariance;
+  let avg = __mean();
+  let i = runIndex,
+      v: f64 = 0;
+
+    while (i--) {
+      v += (unchecked(runs[i]) - avg) ** 2;
+    }
+    v /= <f64>runIndex;
+
+    return (cachedVariance = v);
+}
+
+export function __stdDev(): f64 {
+  return sqrt(__variance());
+}

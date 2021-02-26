@@ -31,4 +31,6 @@ export interface IBenchExports {
   __median(): number;
   __max(): number;
   __min(): number;
+  __variance(): number;
+  __stdDev(): number;
 }

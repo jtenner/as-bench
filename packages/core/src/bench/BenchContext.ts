@@ -88,6 +88,8 @@ export class BenchContext {
     const calculateMedian = this.getCalculateMedian(node);
     const calculateMax = this.getCalculateMax(node);
     const calculateMin = this.getCalculateMin(node);
+    const calculateVariance = this.getCalculateVariance(node);
+    const calculateStdDev = this.getCalculateStdDev(node);
 
     const i32StaticArrayID = this.wasm!.__getStaticArrayI32ID();
     // We need the __pin() method
@@ -142,7 +144,9 @@ export class BenchContext {
     if (calculateMedian) node.median = this.wasm!.__median();
     if (calculateMax) node.max = this.wasm!.__max();
     if (calculateMin) node.min = this.wasm!.__min();
-    
+    if (calculateStdDev) node.stdDev = this.wasm!.__stdDev();
+    if (calculateVariance) node.variance = this.wasm!.__variance();
+
     // 3. unpin the arrays
     this.wasm!.__unpin(beforeEachArray);
     this.wasm!.__unpin(afterEachArray);
