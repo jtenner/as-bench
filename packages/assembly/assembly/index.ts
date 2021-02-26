@@ -173,12 +173,12 @@ export function __variance(): f64 {
   let i = runIndex,
       v: f64 = 0;
 
-    while (i--) {
-      v += (unchecked(runs[i]) - avg) ** 2;
-    }
-    v /= <f64>runIndex;
+  while (i--) {
+    v += (unchecked(runs[i]) - avg) ** 2;
+  }
+  v /= <f64>runIndex;
 
-    return (cachedVariance = v);
+  return (cachedVariance = v);
 }
 
 export function __stdDev(): f64 {
