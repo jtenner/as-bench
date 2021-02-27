@@ -24,25 +24,25 @@ export class BenchNode {
   runs: number[] = [];
 
   /** Determine if this node should collect the median runtime of the BenchNode runs. */
-  collectMedian: boolean | null = null;
+  calculateMedian: boolean | null = null;
 
   /** Determine if this node should collect the mean runtime of the BenchNode runs. */
-  collectMean: boolean | null = null;
+  calculateMean: boolean | null = null;
 
   /** Determine if this node should collect the maximum runtime of the BenchNode runs. */
-  collectMaximum: boolean | null = null;
+  calculateMaximum: boolean | null = null;
 
   /** Determine if this node should collect the minimum runtime of the BenchNode runs. */
-  collectMinimum: boolean | null = null;
+  calculateMinimum: boolean | null = null;
 
   /** Determine if this node should collect the variance of the runtimes in this BenchNode. */
-  collectVariance: boolean | null = null;
+  calculateVariance: boolean | null = null;
 
   /** Determine if this node should collect the standard deviation of the runtimes in this BenchNode. */
-  collectStdDev: boolean | null = null;
+  calculateStdDev: boolean | null = null;
 
   /** The minimum number of iterations this BenchNode must run. */
-  minIterations: number | null = null;
+  minIterationCount: number | null = null;
 
   /** The maximum number of milliseconds this BenchNode can run. */
   maxRuntime: number | null = null;
