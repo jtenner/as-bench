@@ -1,0 +1,14 @@
+{
+  "name": "@as-bench/build",
+  "version": "0.0.1",
+  "description": "The build scripts for as-bench",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jtenner/as-bench/tree/main/packages/build"
+  },
+  "author": "Joshua Tenner <Tenner.Joshua@gmail.com> and Kara Rawson <@ZoeDreams>",
+  "license": "MIT",
+  "scripts": {
+    "pretty": "npx prettier --write \"**/src/**\" \"**/*.md\" \"**/*.json\""
+  }
+}
