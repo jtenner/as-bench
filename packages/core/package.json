@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "build": "npx gulp",
     "test": "node --experimental-wasi-unstable-preview1 --experimental-vm-modules --experimental-wasm-bigint ./node_modules/jest/bin/jest.js"
   },
   "repository": {

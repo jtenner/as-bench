@@ -239,14 +239,14 @@ export class BenchContext {
   /** use custom initializer to populate buffer array in assembly **/
   newI32Array(values: number[]): number {
     const length: number = values.length,
-          $arr = this.wasm!.__newI32Array(length),
-          buffer = Buffer.from(this.wasm!.memory!.buffer);
+      p_arr = this.wasm!.__newI32Array(length),
+      buffer = Buffer.from(this.wasm!.memory!.buffer);
 
-    this.wasm!.__pin($arr);
+    this.wasm!.__pin(p_arr);
     for (let i = 0; i < length; i++) {
-      buffer.writeInt32LE(values[i], $arr + (i << 3));
+      buffer.writeInt32LE(values[i], p_arr + (i << 3));
     }
-    return $arr;
+    return p_arr;
   }
 
   /** enable our node to collect mean values */

@@ -6,8 +6,12 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
+    "build": "npx gulp build",
+    "clean": "npx gulp clean",
+    "// TODO replacing with gulp build files": "",
     "tsc:all": "run-p tsc:default tsc:amd",
-    "tsc:amd": "tsc --outfile lib/as-bench.cli.amd.js --module amd --declaration --declarationMap"
+    "tsc:amd": "tsc --outfile lib/as-bench.cli.amd.js --module amd --declaration --declarationMap",
+    "tsc:default": "tsc"
   },
   "bin": {
     "asb": "bin/asb",
@@ -17,21 +21,23 @@
     "type": "git",
     "url": "https://github.com/jtenner/as-bench/tree/main/packages/cli"
   },
-  "keywords": [
-    "wasm",
-    "testing",
-    "benchmark",
-    "typescript",
-    "assemblyscript"
-  ],
   "author": "Joshua Tenner <Tenner.Joshua@gmail.com> and Kara Rawson <@ZoeDreams>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jtenner/as-bench/issues"
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^4.1.0"
+  },
   "peerDependencies": {
     "assemblyscript": "^0.18.11"
-  }
+  },
+  "keywords": [
+    "assemblyscript",
+    "typescript",
+    "benchmark",
+    "testing",
+    "wasm"
+  ]
 }

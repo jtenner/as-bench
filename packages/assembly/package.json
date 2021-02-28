@@ -7,12 +7,13 @@
   "scripts": {
     "asb": "node ../cli/lib/bench --verbose",
     "bench": "node ../cli/lib/bench --verbose",
-    "test": "run-s asb",
-    "tsc:all": "exit 0",
-    "//// BUILDING //////////////////////////////////////////////////////": "",
-    "build:debug": "node \"../../node_modules/assemblyscript/bin/asc\" assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap --debug ",
-    "build": "node \"../../node_modules/assemblyscript/bin/asc\" assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap -O3z --converge",
-    "//^ TODO replace with our cli run command or something better to test compilation": ""
+    "// TODO ^ make the root package manage our bin script": "",
+    "build": "npx gulp build",
+    "// TODO replace the test and build scripts with gulp build files": "",
+    "// test": "run-s asb",
+    "// tsc:all": "exit 0",
+    "// build:debug": "node \"../../node_modules/assemblyscript/bin/asc\" assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap --debug ",
+    "// build": "node \"../../node_modules/assemblyscript/bin/asc\" assembly/index.ts -b lib/assembly/as-bench.wasm -t lib/assembly/as-bench.wat -d lib/assembly/as-bench.d.ts --exportTable --sourceMap -O3z --converge"
   },
   "repository": {
     "type": "git",
