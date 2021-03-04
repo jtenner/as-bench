@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest",
     "tsc:all": "run-p tsc:default tsc:amd",
+    "tsc:default": "tsc",
     "tsc:amd": "tsc --outfile lib/as-bench.cli.amd.js --module amd --declaration --declarationMap"
   },
   "bin": {
@@ -30,8 +31,16 @@
     "url": "https://github.com/jtenner/as-bench/issues"
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@as-bench/assembly": "^0.0.1",
+    "@as-bench/core": "^0.0.1",
+    "ansi-colors": "^4.1.1",
+    "node-glob": "^1.2.0"
+  },
   "peerDependencies": {
-    "assemblyscript": "^0.18.11"
+    "assemblyscript": "^0.18.12"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.2"
   }
 }

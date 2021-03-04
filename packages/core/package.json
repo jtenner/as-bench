@@ -5,6 +5,9 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "tsc:default": "tsc",
+    "tsc:all": "run-p tsc:default tsc:amd",
+    "tsc:amd": "tsc --outfile lib/as-bench.core.amd.js --module amd --declaration --declarationMap",
     "test": "node --experimental-wasi-unstable-preview1 --experimental-vm-modules --experimental-wasm-bigint ./node_modules/jest/bin/jest.js"
   },
   "repository": {
@@ -26,9 +29,10 @@
   "homepage": "https://github.com/jtenner/as-bench#readme",
   "dependencies": {},
   "peerDependencies": {
-    "assemblyscript": "^0.18.11"
+    "assemblyscript": "^0.18.12"
   },
   "devDependencies": {
+    "typescript": "^4.2.2",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.2"
   }

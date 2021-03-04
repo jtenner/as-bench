@@ -21,11 +21,6 @@ export class BenchContext {
   /** The web assembly memory associated with this benchmark suite. */
   memory: WebAssembly.Memory | undefined = undefined;
 
-  /** Cast the exports as IBenchExports. */
-  get exports(): IBenchExports {
-    return (this.wasm!.exports as unknown) as IBenchExports;
-  }
-
   ///////////////////////////////////////////////////////////
   /// Tree BenchNode values
   ///////////////////////////////////////////////////////////

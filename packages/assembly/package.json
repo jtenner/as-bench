@@ -32,6 +32,6 @@
   },
   "homepage": "https://github.com/jtenner/as-bench#readme",
   "peerDependencies": {
-    "assemblyscript": "^0.18.11"
+    "assemblyscript": "^0.18.12"
   }
 }
