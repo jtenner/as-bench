@@ -34,7 +34,8 @@ const options: Config = {
     alias: "s",
     category: "configuration",
     default: false,
-    description: "Emit the .map file. Format is `./build/bench.{target}.wasm.map`",
+    description:
+      "Emit the .map file. Format is `./build/bench.{target}.wasm.map`",
     type: "b",
   },
   emitText: {
@@ -81,15 +82,22 @@ export async function asb(argv: string[]): Promise<void> {
 
   entries.add(require.resolve("@as-bench/assembly/assembly/index.ts"));
 
-  let promises: Array<Promise<void>> = [];
+  let contexts: Array<BenchContext> = [];
   for (const target of targets) {
-    performBenchmark(parsed, Array.from(entries), target, instantiate, (promise) => {
-      promises.push(promise);
-    });
+    performBenchmark(
+      parsed,
+      Array.from(entries),
+      target,
+      instantiate,
+      (ctx) => {
+        contexts.push(ctx);
+      },
+    );
   }
 
-  await Promise.all(promises);
-
+  for (const ctx of contexts) {
+    await ctx.run();
+  }
 }
 
 function performBenchmark(
@@ -97,7 +105,7 @@ function performBenchmark(
   entries: string[],
   target: string,
   instantiate: any,
-  callback: (result: Promise<void>) => void,
+  callback: (result: BenchContext) => void,
 ): void {
   let binary: Uint8Array;
   main(
@@ -128,14 +136,17 @@ function performBenchmark(
             break;
           }
         }
-      }
+      },
     },
     (err) => {
       if (err) assert(false, err.toString());
 
       const ctx = new BenchContext();
-      const mod = instantiate(binary, (imports: any) => ctx.generateImports(imports)) as ASUtil & IBenchExports;
-      callback(ctx.run(mod));
+      const mod = instantiate(binary, (imports: any) =>
+        ctx.generateImports(imports),
+      ) as ASUtil & IBenchExports;
+      ctx.setWasm(mod);
+      callback(ctx);
       return 0;
     },
   );

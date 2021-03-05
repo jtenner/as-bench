@@ -101,14 +101,15 @@ export class BenchContext {
       },
     });
   }
-
-  /** Run our WebAssembly instance and set default configuration */
-  public async run(wasm: ASUtil & IBenchExports): Promise<void> {
+  public setWasm(wasm: ASUtil & IBenchExports): void {
     this.wasm = wasm;
     this.memory = wasm.memory;
+  }
 
+  /** Run our WebAssembly instance and set default configuration */
+  public async run(): Promise<void> {
     // explicitly start the module execution
-    this.wasm._start();
+    this.wasm!._start();
 
     // get the default values for all the configuration elements
     this.defaultCalculateMean = this.wasm!.__getDefaultCalculateMean() === 1;
